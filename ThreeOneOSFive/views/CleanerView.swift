@@ -89,23 +89,29 @@ struct CleanerView: View {
     @ViewBuilder
     private var cleanerList: some View {
         if records.isEmpty {
-            List { emptySection }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
-                .background(AppTheme.pageBackground)
+            ScrollView(showsIndicators: false) {
+                emptySection
+                    .padding(.horizontal, AppTheme.pageInset)
+                    .padding(.top, 18)
+            }
         } else {
-            List {
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: AppTheme.sectionSpacing) {
                 summarySection
                 applicationsSection
+                }
+                .padding(.horizontal, AppTheme.pageInset)
+                .padding(.top, 18)
+                .padding(.bottom, 28)
             }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
-            .background(AppTheme.pageBackground)
         }
     }
 
     private var summarySection: some View {
-        Section {
+        VStack(alignment: .leading, spacing: 12) {
+            Label(language.text("cleaner.limited_mode"), systemImage: "checkmark.shield")
+                .font(.headline.weight(.semibold))
+                .foregroundStyle(.primary)
             LabeledContent(language.text("cleaner.available")) {
                 Text(sizeText(totalAvailableBytes))
                     .monospacedDigit()
@@ -115,15 +121,29 @@ struct CleanerView: View {
                     .monospacedDigit()
             }
             cleanAction
-        } header: {
-            Label(language.text("cleaner.limited_mode"), systemImage: "checkmark.shield")
-        } footer: {
             Text(language.text("cleaner.scope_footer"))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
         }
+        .padding(16)
+        .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous))
     }
 
     private var applicationsSection: some View {
-        Section {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 8) {
+                Text(language.text("cleaner.apps_with_cache", Int64(filteredRecords.count)))
+                Spacer()
+                if isScanning {
+                    ProgressView()
+                        .controlSize(.mini)
+                    Text(language.text("cleaner.scanned_count", Int64(scannedAppCount)))
+                }
+            }
+            .font(.caption.weight(.medium))
+            .foregroundStyle(.secondary)
+
             if filteredRecords.isEmpty {
                 VStack(spacing: 8) {
                     Image(systemName: "magnifyingglass")
@@ -149,24 +169,15 @@ struct CleanerView: View {
                     .disabled(isCleaning)
                 }
             }
-        } header: {
-            HStack(spacing: 8) {
-                Text(language.text("cleaner.apps_with_cache", Int64(filteredRecords.count)))
-                Spacer()
-                if isScanning {
-                    ProgressView()
-                        .controlSize(.mini)
-                    Text(language.text("cleaner.scanned_count", Int64(scannedAppCount)))
-                }
-            }
-            .font(.caption)
-            .foregroundStyle(.secondary)
-            .textCase(nil)
-        } footer: {
             if !records.isEmpty {
                 Text(language.text("cleaner.apps_footer"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
+        .padding(16)
+        .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous))
     }
 
     private func applicationRow(_ record: CleanerAppRecord) -> some View {
@@ -197,7 +208,9 @@ struct CleanerView: View {
                 .accessibilityHidden(true)
         }
         .contentShape(Rectangle())
-        .padding(.vertical, 2)
+        .padding(.vertical, 9)
+        .padding(.horizontal, 8)
+        .background(selectedBundleIDs.contains(record.id) ? AppTheme.accent.opacity(0.10) : Color.clear, in: RoundedRectangle(cornerRadius: 9, style: .continuous))
         .accessibilityElement(children: .combine)
         .accessibilityValue(
             selectedBundleIDs.contains(record.id)
@@ -313,8 +326,7 @@ struct CleanerView: View {
     }
 
     private var emptySection: some View {
-        Section {
-            VStack(spacing: 12) {
+        VStack(spacing: 12) {
                 if isScanning {
                     ProgressView()
                     Text(language.text("cleaner.scanning"))
@@ -340,6 +352,9 @@ struct CleanerView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 32)
         }
+        .padding(20)
+        .frame(maxWidth: .infinity)
+        .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous))
     }
 
     private func alert(for alert: CleanerAlert) -> Alert {

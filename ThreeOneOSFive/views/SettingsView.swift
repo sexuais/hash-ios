@@ -10,19 +10,18 @@ struct SettingsView: View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: AppTheme.sectionSpacing) {
-                Section {
+                settingsCard {
                     HStack(spacing: 14) {
                         VStack(alignment: .leading, spacing: 3) {
-                            Text("hashios").font(.headline)
+                            Text("hashios").font(.title3.weight(.semibold))
                             Text(language.text("common.version", appVersion))
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }
                     }
-                    .padding(.vertical, 4)
                 }
 
-                Section(language.text("settings.language")) {
+                settingsCard(title: language.text("settings.language")) {
                     Picker(language.text("settings.language"), selection: $languageCode) {
                         ForEach(AppLanguage.allCases) { option in
                             Text(option.displayName).tag(option.rawValue)
@@ -32,12 +31,12 @@ struct SettingsView: View {
                     .labelsHidden()
                 }
 
-                Section(language.text("common.device")) {
+                settingsCard(title: language.text("common.device")) {
                     LabeledContent(language.text("dashboard.hardware_model"), value: AppInfo.displayMachineName)
                     LabeledContent(language.text("settings.ios_version"), value: "\(AppInfo.osVersion) (\(AppInfo.osBuild))")
                 }
 
-                Section {
+                settingsCard(title: language.text("settings.verified_versions"), footer: language.text("settings.supported_versions_footer")) {
                     HStack {
                         Text(language.text("settings.current_version"))
                         Spacer()
@@ -57,10 +56,6 @@ struct SettingsView: View {
                         }
                     }
                     .padding(.vertical, 2)
-                } header: {
-                    Text(language.text("settings.verified_versions"))
-                } footer: {
-                    Text(language.text("settings.supported_versions_footer"))
                 }
                 }
                 .padding(.horizontal, AppTheme.pageInset)
@@ -78,6 +73,31 @@ struct SettingsView: View {
                 }
             }
         }
+    }
+
+    @ViewBuilder
+    private func settingsCard<Content: View>(
+        title: String? = nil,
+        footer: String? = nil,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            if let title {
+                Text(title)
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(AppTheme.accent)
+                    .textCase(.uppercase)
+            }
+            content()
+            if let footer {
+                Text(footer)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(16)
+        .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous))
     }
 
     private var appVersion: String {
