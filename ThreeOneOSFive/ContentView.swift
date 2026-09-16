@@ -94,7 +94,7 @@ struct ContentView: View {
         VStack(alignment: .leading, spacing: 12) {
             sectionHeader("Patches", detail: "Tap to toggle", icon: "slider.horizontal.3")
 
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {
+            LazyVStack(spacing: 8) {
                 patchCard(name: "Aim Drag", target: "FREE FIRE • NORMAL", package: "OGIOS File (6).3105", color: AppTheme.accent, state: $aimDragEnabled)
                 patchCard(name: "Aim Neck", target: "FREE FIRE • NORMAL", package: "OGIOS File (7).3105", color: AppTheme.secondaryAccent, state: $aimNeckEnabled)
                 patchCard(name: "Antenna", target: "FREE FIRE • NORMAL", package: "OGIOS File (8).3105", color: AppTheme.secondaryAccent, state: $hspeitoffEnabled)
@@ -146,11 +146,11 @@ struct ContentView: View {
                     .font(.system(size: 18, weight: .bold))
                     .foregroundStyle(color)
                 Text(title)
-                    .font(.system(size: 13, weight: .black, design: .rounded))
-                    .foregroundStyle(.white)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.primary)
                 Text(subtitle)
-                    .font(.system(size: 10, weight: .medium, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.5))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity, minHeight: 82, alignment: .leading)
             .padding(.horizontal, 14)
@@ -165,11 +165,11 @@ struct ContentView: View {
                 .font(.system(size: 18, weight: .bold))
                 .foregroundStyle(color.opacity(0.72))
             Text(title)
-                .font(.system(size: 13, weight: .black, design: .rounded))
-                .foregroundStyle(.white.opacity(0.72))
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(.secondary)
             Text(subtitle)
-                .font(.system(size: 10, weight: .bold, design: .rounded))
-                .foregroundStyle(color.opacity(0.72))
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, minHeight: 82, alignment: .leading)
         .padding(.horizontal, 14)

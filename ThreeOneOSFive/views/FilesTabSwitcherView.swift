@@ -34,6 +34,9 @@ struct FilesTabSwitcherView: View {
                     }
                 }
             }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(AppTheme.pageBackground)
             .navigationTitle(language.text("browser.tabs"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

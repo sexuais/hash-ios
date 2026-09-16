@@ -123,7 +123,7 @@ struct OnboardingView: View {
                         .padding(.vertical, 14)
                         .background(
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .fill(Color(uiColor: .secondarySystemBackground))
+                                .fill(AppTheme.referenceCard)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10, style: .continuous)
                                         .stroke(languageCode == option.rawValue ? AppTheme.accent : Color.clear, lineWidth: 1)
@@ -143,7 +143,7 @@ struct OnboardingView: View {
             Spacer(minLength: 10)
              ZStack {
                  RoundedRectangle(cornerRadius: 10, style: .continuous)
-                     .fill(Color(uiColor: .secondarySystemBackground))
+                     .fill(AppTheme.referenceCard)
                      .overlay(
                          RoundedRectangle(cornerRadius: 10, style: .continuous)
                              .stroke(AppTheme.accent.opacity(0.3), lineWidth: 1)
@@ -168,7 +168,7 @@ struct OnboardingView: View {
                  .foregroundStyle(AppTheme.accent)
                  .padding(.horizontal, 14)
                  .padding(.vertical, 8)
-                 .background(Color(uiColor: .secondarySystemBackground), in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+                 .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
             Spacer(minLength: 10)
         }
     }
@@ -178,7 +178,7 @@ struct OnboardingView: View {
             Spacer(minLength: 8)
              ZStack {
                  RoundedRectangle(cornerRadius: 18, style: .continuous)
-                     .fill(Color(uiColor: .secondarySystemBackground))
+                     .fill(AppTheme.referenceCard)
                      .overlay(
                          RoundedRectangle(cornerRadius: 10, style: .continuous)
                              .stroke(AppTheme.accent.opacity(0.3), lineWidth: 1)
@@ -220,7 +220,7 @@ struct OnboardingView: View {
                     }
                 }
                 .padding(12)
-                 .background(Color(uiColor: .secondarySystemBackground), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+                 .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
             }
             .padding(.horizontal, 20)
             Text(language.text("onboarding.versions_footer", AppInfo.osVersion, AppInfo.osBuild))

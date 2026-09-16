@@ -15,6 +15,14 @@ enum AppTheme {
     static let appIconSize: CGFloat = 32
     static let emptyIconSize: CGFloat = 30
     static let selectionIconSize: CGFloat = 18
+
+    static let cardCornerRadius: CGFloat = 12
+    static let sectionSpacing: CGFloat = 18
+
+    static func surface<S: ShapeStyle>(_ style: S = AppTheme.referenceCard) -> some View {
+        RoundedRectangle(cornerRadius: cardCornerRadius, style: .continuous)
+            .fill(style)
+    }
 }
 
 struct AppRowIcon: View {
@@ -69,7 +77,7 @@ struct AppSearchField: View {
         .padding(.horizontal, 11)
         .frame(minHeight: 36)
         .background(
-            Color(uiColor: .secondarySystemFill),
+            AppTheme.referenceCard,
             in: RoundedRectangle(cornerRadius: 10, style: .continuous)
         )
         .padding(.horizontal, AppTheme.pageInset)

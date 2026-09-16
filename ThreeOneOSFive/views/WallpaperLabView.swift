@@ -34,7 +34,9 @@ struct WallpaperLabView: View {
                 packagesSection
                 if !activeReceipts.isEmpty { resetSection }
             }
-            .listStyle(.insetGrouped)
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(AppTheme.pageBackground)
             .navigationTitle(language.text("wallpaper.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }

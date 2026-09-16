@@ -72,7 +72,6 @@ struct CleanerView: View {
                 )
                 Divider()
                 cleanerList
-                    .listStyle(.insetGrouped)
             }
             .navigationTitle(language.text("cleaner.title"))
             .navigationBarTitleDisplayMode(.inline)
@@ -91,11 +90,17 @@ struct CleanerView: View {
     private var cleanerList: some View {
         if records.isEmpty {
             List { emptySection }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(AppTheme.pageBackground)
         } else {
             List {
                 summarySection
                 applicationsSection
             }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(AppTheme.pageBackground)
         }
     }
 

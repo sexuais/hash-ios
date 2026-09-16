@@ -8,7 +8,8 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationStack {
-            Form {
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: AppTheme.sectionSpacing) {
                 Section {
                     HStack(spacing: 14) {
                         VStack(alignment: .leading, spacing: 3) {
@@ -61,10 +62,12 @@ struct SettingsView: View {
                 } footer: {
                     Text(language.text("settings.supported_versions_footer"))
                 }
+                }
+                .padding(.horizontal, AppTheme.pageInset)
+                .padding(.vertical, 18)
 
             }
             .tint(AppTheme.accent)
-            .scrollContentBackground(.hidden)
             .background(AppTheme.pageBackground)
             .navigationTitle(language.text("settings.title"))
             .navigationBarTitleDisplayMode(.inline)
