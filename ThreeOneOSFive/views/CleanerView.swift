@@ -327,31 +327,30 @@ struct CleanerView: View {
 
     private var emptySection: some View {
         VStack(spacing: 12) {
-                if isScanning {
-                    ProgressView()
-                    Text(language.text("cleaner.scanning"))
-                        .font(.headline)
-                    Text(language.text("cleaner.scanned_count", Int64(scannedAppCount)))
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                } else {
-                    Image(systemName: "checkmark.circle")
-                        .font(.system(size: AppTheme.emptyIconSize, weight: .light))
-                        .foregroundStyle(.secondary)
-                    Text(language.text("cleaner.empty_title"))
-                        .font(.headline)
-                    Text(language.text("cleaner.empty_message"))
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    Button(language.text("cleaner.scan_again")) { reload() }
-                        .buttonStyle(.bordered)
-                        .controlSize(.large)
-                }
+            if isScanning {
+                ProgressView()
+                Text(language.text("cleaner.scanning"))
+                    .font(.headline)
+                Text(language.text("cleaner.scanned_count", Int64(scannedAppCount)))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            } else {
+                Image(systemName: "checkmark.circle")
+                    .font(.system(size: AppTheme.emptyIconSize, weight: .light))
+                    .foregroundStyle(.secondary)
+                Text(language.text("cleaner.empty_title"))
+                    .font(.headline)
+                Text(language.text("cleaner.empty_message"))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Button(language.text("cleaner.scan_again")) { reload() }
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
             }
-            .multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 32)
         }
+        .multilineTextAlignment(.center)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 32)
         .padding(20)
         .frame(maxWidth: .infinity)
         .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous))

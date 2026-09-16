@@ -189,7 +189,9 @@ struct ContentView: View {
                 .font(.footnote.weight(.medium))
                 .foregroundStyle(AppTheme.accent)
         }
-        .padding(.horizontal, 4)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+        .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous))
     }
 
     private var developerCredits: some View {
