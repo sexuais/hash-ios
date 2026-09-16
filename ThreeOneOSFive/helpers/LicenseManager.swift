@@ -4,7 +4,7 @@ import Security
 
 @MainActor
 final class LicenseManager: ObservableObject {
-    static let accessKey = "OGIOS"
+    static let accessKey = "hashios"
 
     @Published private(set) var expirationDate: Date?
     @Published private(set) var isActive = false
@@ -13,7 +13,7 @@ final class LicenseManager: ObservableObject {
     @Published private(set) var contactOwner: String?
     @Published var rememberKey = true
 
-    private let service = "com.OGIOS.external-ios.activation"
+    private let service = "com.hashios.external-ios.activation"
     private let keyAccount = "license-key"
     private var lastAttemptAt: Date?
 

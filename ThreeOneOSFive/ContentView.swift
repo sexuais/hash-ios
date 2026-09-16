@@ -58,7 +58,7 @@ struct ContentView: View {
     private var brandHeader: some View {
         HStack(spacing: 14) {
             VStack(alignment: .leading, spacing: 3) {
-                Text("OGIOS")
+                Text("hashios")
                     .font(.system(size: 25, weight: .black, design: .rounded))
                     .tracking(3)
                     .foregroundStyle(.white)
@@ -208,7 +208,7 @@ struct ContentView: View {
                 .tracking(1.2)
                 .foregroundStyle(.white.opacity(0.72))
             Spacer()
-            Text("OGIOS • PRONTO")
+            Text("hashios • PRONTO")
                 .font(.system(size: 9, weight: .bold, design: .rounded))
                 .foregroundStyle(AppTheme.accent.opacity(0.8))
         }
@@ -220,7 +220,7 @@ struct ContentView: View {
 
     private var developerCredits: some View {
         VStack(spacing: 10) {
-            Text("Developed by OGIOS")
+            Text("Developed by hashios")
                 .font(.system(size: 11, weight: .bold, design: .rounded))
                 .foregroundStyle(.white.opacity(0.72))
                 .multilineTextAlignment(.center)
@@ -230,7 +230,7 @@ struct ContentView: View {
                 .foregroundStyle(AppTheme.secondaryAccent.opacity(0.85))
 
             HStack(spacing: 10) {
-                channelButton(title: "OGIOS Telegram", url: "https://t.me/ogios1")
+                channelButton(title: "hashios Telegram", url: "https://t.me/ogios1")
             }
         }
         .frame(maxWidth: .infinity)
@@ -468,7 +468,7 @@ private struct PatchUnlockPrompt: View {
                             .foregroundStyle(.red)
                     }
                 } footer: {
-                    Text("Enter the password once to unlock this OGIOS package on this device.")
+                    Text("Enter the password once to unlock this hashios package on this device.")
                 }
             }
             .navigationTitle("Unlock package")
