@@ -8,10 +8,7 @@ struct LicenseActivationView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                AnimatedHyperBackdrop()
-                    .ignoresSafeArea()
-
-                Color.black.opacity(0.18)
+                AppTheme.pageBackground
                     .ignoresSafeArea()
 
                 ScrollViewReader { proxy in
@@ -20,8 +17,7 @@ struct LicenseActivationView: View {
                             Spacer(minLength: 42)
 
                             Text("hashios")
-                                .font(.system(size: 30, weight: .black, design: .rounded))
-                                .tracking(1.4)
+                                .font(.system(size: 30, weight: .bold, design: .rounded))
                                 .foregroundStyle(.white)
 
                             Text("Version: 1.1.0")
@@ -30,7 +26,7 @@ struct LicenseActivationView: View {
                                 .padding(.top, 5)
 
                             Text("Package: hashios")
-                                .font(.system(size: 12, weight: .bold, design: .rounded))
+                                .font(.caption.weight(.medium))
                                 .foregroundStyle(AppTheme.secondaryAccent.opacity(0.9))
                                 .padding(.top, 8)
 
@@ -40,13 +36,13 @@ struct LicenseActivationView: View {
                                         .foregroundStyle(AppTheme.secondaryAccent)
                                         .font(.system(size: 16, weight: .bold))
                                     Text(manager.isBusy ? "Package initializing" : "Key required")
-                                        .font(.system(size: 16, weight: .black, design: .rounded))
+                                        .font(.headline.weight(.semibold))
                                         .foregroundStyle(.white)
                                     Spacer()
                                 }
 
                                 Text("Enter your hashios license key to continue")
-                                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                                    .font(.subheadline)
                                     .foregroundStyle(.white.opacity(0.68))
                                     .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -60,12 +56,12 @@ struct LicenseActivationView: View {
                                     .foregroundStyle(.white)
                                     .padding(.horizontal, 16)
                                     .frame(height: 54)
-                                    .background(Color.gray.opacity(0.22), in: RoundedRectangle(cornerRadius: 17, style: .continuous))
-                                    .overlay(RoundedRectangle(cornerRadius: 17, style: .continuous).stroke(AppTheme.accent.opacity(0.48), lineWidth: 1))
+                                    .background(AppTheme.pageBackground, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                    .overlay(RoundedRectangle(cornerRadius: 10, style: .continuous).stroke(Color.white.opacity(0.12), lineWidth: 1))
                                     .id("license-field")
 
                                 Toggle("Remember key on this device", isOn: $manager.rememberKey)
-                                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                                    .font(.caption.weight(.medium))
                                     .foregroundStyle(.white.opacity(0.72))
                                     .tint(AppTheme.accent)
 
@@ -74,11 +70,10 @@ struct LicenseActivationView: View {
                                         Image(systemName: manager.isBusy ? "hourglass" : "checkmark.shield.fill")
                                         Text(manager.isBusy ? "VERIFYING…" : "VERIFY AND CONTINUE")
                                     }
-                                    .font(.system(size: 14, weight: .black, design: .rounded))
+                                    .font(.subheadline.weight(.semibold))
                                     .foregroundStyle(.white)
-                                    .frame(maxWidth: .infinity, minHeight: 54)
-                                    .background(AppTheme.accent, in: RoundedRectangle(cornerRadius: 17, style: .continuous))
-                                    .shadow(color: AppTheme.accent.opacity(0.30), radius: 14, y: 7)
+                                    .frame(maxWidth: .infinity, minHeight: 50)
+                                    .background(AppTheme.accent, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
                                 }
                                 .buttonStyle(.plain)
                                 .disabled(key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || manager.isBusy)
@@ -107,9 +102,7 @@ struct LicenseActivationView: View {
                                 }
                             }
                             .padding(20)
-                            .background(.ultraThinMaterial.opacity(0.72), in: RoundedRectangle(cornerRadius: 25, style: .continuous))
-                            .background(Color.gray.opacity(0.18), in: RoundedRectangle(cornerRadius: 25, style: .continuous))
-                            .overlay(RoundedRectangle(cornerRadius: 25, style: .continuous).stroke(Color.white.opacity(0.16), lineWidth: 1))
+                            .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                             .padding(.horizontal, 22)
                             .padding(.top, 26)
                             .id("activation-card")
