@@ -1,13 +1,18 @@
 import SwiftUI
 
 enum AppTheme {
-    static let accent = Color(red: 0.49, green: 0.69, blue: 0.98)
-    static let secondaryAccent = Color(red: 0.74, green: 0.80, blue: 0.97)
-    static let pageBackground = Color(red: 0.04, green: 0.05, blue: 0.08)
-    static let consoleBackground = Color(red: 0.02, green: 0.03, blue: 0.05)
+    static let accent = Color(red: 0.44, green: 0.72, blue: 1.00)
+    static let secondaryAccent = Color(red: 0.76, green: 0.85, blue: 1.00)
+    static let luminousAccent = Color(red: 0.66, green: 0.95, blue: 1.00)
+    static let pageBackground = Color(red: 0.03, green: 0.04, blue: 0.07)
+    static let consoleBackground = Color(red: 0.01, green: 0.02, blue: 0.04)
     static let referenceCard = Color(red: 0.10, green: 0.12, blue: 0.18)
-    static let panelCard = Color(red: 0.12, green: 0.14, blue: 0.21)
-    static let subtleLine = Color.white.opacity(0.08)
+    static let panelCard = Color(red: 0.13, green: 0.15, blue: 0.22)
+    static let elevatedCard = Color(red: 0.16, green: 0.18, blue: 0.26)
+    static let subtleLine = Color.white.opacity(0.07)
+    static let softGlow = Color(red: 0.45, green: 0.60, blue: 1.00).opacity(0.22)
+    static let success = Color(red: 0.41, green: 0.88, blue: 0.74)
+    static let danger = Color(red: 0.98, green: 0.46, blue: 0.58)
     static let pageInset: CGFloat = 18
     static let rowIconSize: CGFloat = 17
     static let rowIconFrame: CGFloat = 28

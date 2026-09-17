@@ -128,7 +128,7 @@ struct CleanerView: View {
         }
         .padding(16)
         .background(
-            AppTheme.referenceCard,
+            LinearGradient(colors: [AppTheme.referenceCard, AppTheme.elevatedCard], startPoint: .topLeading, endPoint: .bottomTrailing),
             in: RoundedRectangle(cornerRadius: 20, style: .continuous)
         )
         .overlay(

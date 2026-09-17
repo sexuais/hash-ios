@@ -21,15 +21,30 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             LinearGradient(
-                colors: [AppTheme.pageBackground, Color(red: 0.08, green: 0.10, blue: 0.16)],
+                colors: [AppTheme.pageBackground, Color(red: 0.06, green: 0.08, blue: 0.15), Color(red: 0.10, green: 0.08, blue: 0.18)],
                 startPoint: .top,
                 endPoint: .bottom
             )
             .ignoresSafeArea()
 
+            Circle()
+                .fill(AppTheme.accent.opacity(0.18))
+                .frame(width: 320, height: 320)
+                .blur(radius: 70)
+                .offset(x: -120, y: -230)
+                .allowsHitTesting(false)
+
+            Circle()
+                .fill(AppTheme.secondaryAccent.opacity(0.10))
+                .frame(width: 280, height: 280)
+                .blur(radius: 80)
+                .offset(x: 150, y: 220)
+                .allowsHitTesting(false)
+
             ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 22) {
+                VStack(alignment: .leading, spacing: 20) {
                     brandHeader
+                    heroStatusPanel
                     devicePanel
                     patchOptions
                     gameLaunchPanel
@@ -38,7 +53,7 @@ struct ContentView: View {
                 }
                 .padding(.horizontal, AppTheme.pageInset)
                 .padding(.top, 18)
-                .padding(.bottom, 32)
+                .padding(.bottom, 36)
             }
         }
         .preferredColorScheme(.dark)
@@ -62,11 +77,11 @@ struct ContentView: View {
     private var brandHeader: some View {
         HStack(alignment: .center, spacing: 14) {
             AppLogo(size: 44)
-                .shadow(color: AppTheme.accent.opacity(0.18), radius: 14, x: 0, y: 12)
+                .shadow(color: AppTheme.accent.opacity(0.25), radius: 18, x: 0, y: 12)
 
             VStack(alignment: .leading, spacing: 3) {
                 Text("hashios")
-                    .font(.system(size: 26, weight: .bold, design: .rounded))
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
                     .foregroundStyle(.white)
                 Text("Patch control center")
                     .font(.subheadline.weight(.medium))
@@ -90,6 +105,44 @@ struct ContentView: View {
         }
     }
 
+    private var heroStatusPanel: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            HStack(alignment: .center) {
+                statusPill(title: appState.isSupported ? "READY" : "CHECK")
+                Spacer()
+                Text(appState.isSupported ? "System online" : "Support check")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            }
+
+            HStack(alignment: .firstTextBaseline, spacing: 14) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Device health")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(AppTheme.secondaryAccent)
+                    Text(appState.isSupported ? "OPERATING NORMALLY" : "REVIEW REQUIRED")
+                        .font(.system(size: 23, weight: .bold, design: .rounded))
+                        .foregroundStyle(.white)
+                }
+                Spacer()
+                ZStack {
+                    Circle()
+                        .fill(appState.isSupported ? AppTheme.success.opacity(0.18) : AppTheme.danger.opacity(0.18))
+                        .frame(width: 54, height: 54)
+                    Image(systemName: appState.isSupported ? "checkmark.seal.fill" : "exclamationmark.triangle.fill")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundStyle(appState.isSupported ? AppTheme.success : AppTheme.danger)
+                }
+            }
+        }
+        .padding(18)
+        .background(
+            LinearGradient(colors: [AppTheme.referenceCard, AppTheme.elevatedCard], startPoint: .topLeading, endPoint: .bottomTrailing),
+            in: RoundedRectangle(cornerRadius: 26, style: .continuous)
+        )
+        .overlay(RoundedRectangle(cornerRadius: 26, style: .continuous).stroke(AppTheme.softGlow, lineWidth: 1))
+    }
+
     private var devicePanel: some View {
         VStack(spacing: 14) {
             sectionHeader("Device", detail: appState.isSupported ? "Supported" : "Unsupported", icon: "iphone")
@@ -98,7 +151,7 @@ struct ContentView: View {
                 Divider().background(AppTheme.subtleLine)
                 statusRow(icon: "iphone", title: "Device", value: AppInfo.displayMachineName, color: AppTheme.secondaryAccent)
                 Divider().background(AppTheme.subtleLine)
-                statusRow(icon: "checkmark.seal.fill", title: "Support", value: appState.isSupported ? "SUPPORTED" : "UNSUPPORTED", color: appState.isSupported ? .green : .red)
+                statusRow(icon: "checkmark.seal.fill", title: "Support", value: appState.isSupported ? "SUPPORTED" : "UNSUPPORTED", color: appState.isSupported ? AppTheme.success : AppTheme.danger)
             }
         }
         .padding(18)
@@ -181,11 +234,11 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, minHeight: 90, alignment: .leading)
             .padding(.horizontal, 14)
             .background(
-                AppTheme.referenceCard,
-                in: RoundedRectangle(cornerRadius: 16, style: .continuous)
+                LinearGradient(colors: [AppTheme.referenceCard, AppTheme.elevatedCard], startPoint: .topLeading, endPoint: .bottomTrailing),
+                in: RoundedRectangle(cornerRadius: 18, style: .continuous)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
                     .stroke(AppTheme.subtleLine, lineWidth: 1)
             )
         }
@@ -228,7 +281,10 @@ struct ContentView: View {
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
-        .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous))
+        .background(
+            LinearGradient(colors: [AppTheme.referenceCard, AppTheme.elevatedCard], startPoint: .leading, endPoint: .trailing),
+            in: RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)
+        )
         .overlay(
             RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous)
                 .stroke(AppTheme.subtleLine, lineWidth: 1)
@@ -272,9 +328,14 @@ struct ContentView: View {
 
     private func sectionHeader(_ title: String, detail: String, icon: String) -> some View {
         HStack(spacing: 9) {
-            Image(systemName: icon)
-                .foregroundStyle(AppTheme.accent)
-                .font(.system(size: 14, weight: .semibold))
+            ZStack {
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(AppTheme.accent.opacity(0.12))
+                    .frame(width: 28, height: 28)
+                Image(systemName: icon)
+                    .foregroundStyle(AppTheme.accent)
+                    .font(.system(size: 14, weight: .semibold))
+            }
             Text(title)
                 .font(.title3.weight(.semibold))
             Spacer()
@@ -285,6 +346,15 @@ struct ContentView: View {
                 .padding(.vertical, 4)
                 .background(AppTheme.panelCard, in: Capsule())
         }
+    }
+
+    private func statusPill(title: String) -> some View {
+        Text(title)
+            .font(.caption.weight(.bold))
+            .foregroundStyle(AppTheme.accent)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(AppTheme.accent.opacity(0.12), in: Capsule())
     }
 
     private func statusRow(icon: String, title: String, value: String, color: Color) -> some View {
@@ -422,13 +492,13 @@ private struct PatchOptionCard: View {
         Button(action: action) {
             HStack(spacing: 12) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill((isEnabled ? color : .secondary).opacity(isEnabled ? 0.18 : 0.10))
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill((isEnabled ? color : AppTheme.secondaryAccent).opacity(isEnabled ? 0.18 : 0.10))
                     Image(systemName: "bolt.fill")
                         .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(isEnabled ? color : .secondary)
+                        .foregroundStyle(isEnabled ? color : AppTheme.secondaryAccent)
                 }
-                .frame(width: 34, height: 34)
+                .frame(width: 36, height: 36)
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(name)
@@ -443,28 +513,33 @@ private struct PatchOptionCard: View {
                 Spacer(minLength: 4)
 
                 VStack(alignment: .trailing, spacing: 4) {
-                    Text(isEnabled ? "ON" : "OFF")
-                        .font(.caption2.weight(.bold))
-                        .foregroundStyle(isEnabled ? .green : .secondary)
+                    Capsule()
+                        .fill(isEnabled ? AppTheme.success.opacity(0.18) : AppTheme.secondaryAccent.opacity(0.10))
+                        .frame(width: 42, height: 18)
+                        .overlay(
+                            Text(isEnabled ? "ON" : "OFF")
+                                .font(.caption2.weight(.bold))
+                                .foregroundStyle(isEnabled ? AppTheme.success : .secondary)
+                        )
                     Image(systemName: isEnabled ? "checkmark.circle.fill" : "circle")
                         .font(.system(size: 18, weight: .medium))
-                        .foregroundStyle(isEnabled ? .green : .secondary.opacity(0.6))
+                        .foregroundStyle(isEnabled ? AppTheme.success : .secondary.opacity(0.6))
                 }
             }
-            .frame(maxWidth: .infinity, minHeight: 68)
+            .frame(maxWidth: .infinity, minHeight: 74)
             .padding(.horizontal, 12)
             .background(
                 isEnabled ? color.opacity(0.06) : AppTheme.referenceCard,
-                in: RoundedRectangle(cornerRadius: 16, style: .continuous)
+                in: RoundedRectangle(cornerRadius: 18, style: .continuous)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
                     .stroke(isEnabled ? color.opacity(0.4) : AppTheme.subtleLine, lineWidth: 1)
             )
             .overlay(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 4)
                     .fill(isEnabled ? color : .clear)
-                    .frame(width: 4, height: 30)
+                    .frame(width: 4, height: 32)
                     .padding(.leading, 8)
             }
         }

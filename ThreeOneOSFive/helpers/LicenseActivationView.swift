@@ -9,11 +9,18 @@ struct LicenseActivationView: View {
         NavigationStack {
             ZStack {
                 LinearGradient(
-                    colors: [AppTheme.pageBackground, Color(red: 0.08, green: 0.10, blue: 0.16)],
+                    colors: [AppTheme.pageBackground, Color(red: 0.07, green: 0.09, blue: 0.15), Color(red: 0.10, green: 0.09, blue: 0.17)],
                     startPoint: .top,
                     endPoint: .bottom
                 )
                 .ignoresSafeArea()
+
+                Circle()
+                    .fill(AppTheme.accent.opacity(0.18))
+                    .frame(width: 260, height: 260)
+                    .blur(radius: 80)
+                    .offset(x: 120, y: -220)
+                    .allowsHitTesting(false)
 
                 ScrollViewReader { proxy in
                     ScrollView(showsIndicators: false) {
@@ -109,7 +116,7 @@ struct LicenseActivationView: View {
                                 }
                             }
                             .padding(20)
-                            .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+                            .background(LinearGradient(colors: [AppTheme.referenceCard, AppTheme.elevatedCard], startPoint: .topLeading, endPoint: .bottomTrailing), in: RoundedRectangle(cornerRadius: 20, style: .continuous))
                             .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(AppTheme.subtleLine, lineWidth: 1))
                             .padding(.horizontal, 22)
                             .padding(.top, 26)

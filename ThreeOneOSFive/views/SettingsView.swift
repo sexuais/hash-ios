@@ -10,7 +10,7 @@ struct SettingsView: View {
         NavigationStack {
             ZStack {
                 LinearGradient(
-                    colors: [AppTheme.pageBackground, Color(red: 0.08, green: 0.10, blue: 0.16)],
+                    colors: [AppTheme.pageBackground, Color(red: 0.07, green: 0.09, blue: 0.15), Color(red: 0.10, green: 0.09, blue: 0.17)],
                     startPoint: .top,
                     endPoint: .bottom
                 )
@@ -29,8 +29,8 @@ struct SettingsView: View {
                                 }
                                 Spacer()
                                 Capsule()
-                                    .fill(AppTheme.accent.opacity(0.14))
-                                    .frame(width: 10, height: 10)
+                                    .fill(AppTheme.accent.opacity(0.16))
+                                    .frame(width: 12, height: 12)
                             }
                         }
 
@@ -54,7 +54,7 @@ struct SettingsView: View {
                                 Text(language.text("settings.current_version"))
                                 Spacer()
                                 Text(language.text(appState.isSupported ? "settings.supported" : "settings.unsupported"))
-                                .foregroundStyle(appState.isSupported ? Color.green : Color.red)
+                                .foregroundStyle(appState.isSupported ? AppTheme.success : AppTheme.danger)
                             }
                             LabeledContent("iOS 17", value: ExploitSupportPolicy.verifiedIOS17Range)
                             LabeledContent("iOS 18", value: ExploitSupportPolicy.verifiedIOS18Range)
@@ -110,7 +110,7 @@ struct SettingsView: View {
         }
         .padding(16)
         .background(
-            AppTheme.referenceCard,
+            LinearGradient(colors: [AppTheme.referenceCard, AppTheme.elevatedCard], startPoint: .topLeading, endPoint: .bottomTrailing),
             in: RoundedRectangle(cornerRadius: 20, style: .continuous)
         )
         .overlay(
