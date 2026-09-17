@@ -127,7 +127,14 @@ struct CleanerView: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(16)
-        .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous))
+        .background(
+            AppTheme.referenceCard,
+            in: RoundedRectangle(cornerRadius: 20, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(AppTheme.subtleLine, lineWidth: 1)
+        )
     }
 
     private var applicationsSection: some View {
@@ -177,7 +184,14 @@ struct CleanerView: View {
             }
         }
         .padding(16)
-        .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous))
+        .background(
+            AppTheme.referenceCard,
+            in: RoundedRectangle(cornerRadius: 20, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(AppTheme.subtleLine, lineWidth: 1)
+        )
     }
 
     private func applicationRow(_ record: CleanerAppRecord) -> some View {
@@ -210,7 +224,14 @@ struct CleanerView: View {
         .contentShape(Rectangle())
         .padding(.vertical, 9)
         .padding(.horizontal, 8)
-        .background(selectedBundleIDs.contains(record.id) ? AppTheme.accent.opacity(0.10) : Color.clear, in: RoundedRectangle(cornerRadius: 9, style: .continuous))
+        .background(
+            selectedBundleIDs.contains(record.id) ? AppTheme.accent.opacity(0.12) : Color.clear,
+            in: RoundedRectangle(cornerRadius: 12, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .stroke(selectedBundleIDs.contains(record.id) ? AppTheme.accent.opacity(0.28) : AppTheme.subtleLine, lineWidth: 1)
+        )
         .accessibilityElement(children: .combine)
         .accessibilityValue(
             selectedBundleIDs.contains(record.id)

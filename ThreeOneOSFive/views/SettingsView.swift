@@ -8,62 +8,74 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: AppTheme.sectionSpacing) {
-                settingsCard {
-                    HStack(spacing: 14) {
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text("hashios").font(.title3.weight(.semibold))
-                            Text(language.text("common.version", appVersion))
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
+            ZStack {
+                LinearGradient(
+                    colors: [AppTheme.pageBackground, Color(red: 0.08, green: 0.10, blue: 0.16)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
+
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: AppTheme.sectionSpacing) {
+                        settingsCard {
+                            HStack(spacing: 14) {
+                                AppLogo(size: 42)
+                                VStack(alignment: .leading, spacing: 3) {
+                                    Text("hashios").font(.title3.weight(.semibold))
+                                    Text(language.text("common.version", appVersion))
+                                        .font(.subheadline)
+                                        .foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                                Capsule()
+                                    .fill(AppTheme.accent.opacity(0.14))
+                                    .frame(width: 10, height: 10)
+                            }
+                        }
+
+                        settingsCard(title: language.text("settings.language")) {
+                            Picker(language.text("settings.language"), selection: $languageCode) {
+                                ForEach(AppLanguage.allCases) { option in
+                                    Text(option.displayName).tag(option.rawValue)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                            .labelsHidden()
+                        }
+
+                        settingsCard(title: language.text("common.device")) {
+                            LabeledContent(language.text("dashboard.hardware_model"), value: AppInfo.displayMachineName)
+                            LabeledContent(language.text("settings.ios_version"), value: "\(AppInfo.osVersion) (\(AppInfo.osBuild))")
+                        }
+
+                        settingsCard(title: language.text("settings.verified_versions"), footer: language.text("settings.supported_versions_footer")) {
+                            HStack {
+                                Text(language.text("settings.current_version"))
+                                Spacer()
+                                Text(language.text(appState.isSupported ? "settings.supported" : "settings.unsupported"))
+                                .foregroundStyle(appState.isSupported ? Color.green : Color.red)
+                            }
+                            LabeledContent("iOS 17", value: ExploitSupportPolicy.verifiedIOS17Range)
+                            LabeledContent("iOS 18", value: ExploitSupportPolicy.verifiedIOS18Range)
+                            LabeledContent("iOS 26", value: ExploitSupportPolicy.verifiedIOS26Range)
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("iOS 27.0")
+                                    .font(.body)
+                                ForEach(ExploitSupportPolicy.verifiedIOS27Builds, id: \.build) { version in
+                                    Text(versionLabel(version))
+                                    .font(.caption.monospaced())
+                                    .foregroundStyle(.secondary)
+                                }
+                            }
+                            .padding(.vertical, 2)
                         }
                     }
+                    .padding(.horizontal, AppTheme.pageInset)
+                    .padding(.vertical, 18)
                 }
-
-                settingsCard(title: language.text("settings.language")) {
-                    Picker(language.text("settings.language"), selection: $languageCode) {
-                        ForEach(AppLanguage.allCases) { option in
-                            Text(option.displayName).tag(option.rawValue)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    .labelsHidden()
-                }
-
-                settingsCard(title: language.text("common.device")) {
-                    LabeledContent(language.text("dashboard.hardware_model"), value: AppInfo.displayMachineName)
-                    LabeledContent(language.text("settings.ios_version"), value: "\(AppInfo.osVersion) (\(AppInfo.osBuild))")
-                }
-
-                settingsCard(title: language.text("settings.verified_versions"), footer: language.text("settings.supported_versions_footer")) {
-                    HStack {
-                        Text(language.text("settings.current_version"))
-                        Spacer()
-                        Text(language.text(appState.isSupported ? "settings.supported" : "settings.unsupported"))
-                        .foregroundStyle(appState.isSupported ? Color.green : Color.red)
-                    }
-                    LabeledContent("iOS 17", value: ExploitSupportPolicy.verifiedIOS17Range)
-                    LabeledContent("iOS 18", value: ExploitSupportPolicy.verifiedIOS18Range)
-                    LabeledContent("iOS 26", value: ExploitSupportPolicy.verifiedIOS26Range)
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("iOS 27.0")
-                            .font(.body)
-                        ForEach(ExploitSupportPolicy.verifiedIOS27Builds, id: \.build) { version in
-                            Text(versionLabel(version))
-                            .font(.caption.monospaced())
-                            .foregroundStyle(.secondary)
-                        }
-                    }
-                    .padding(.vertical, 2)
-                }
-                }
-                .padding(.horizontal, AppTheme.pageInset)
-                .padding(.vertical, 18)
-
             }
             .tint(AppTheme.accent)
-            .background(AppTheme.pageBackground)
             .navigationTitle(language.text("settings.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -97,7 +109,14 @@ struct SettingsView: View {
             }
         }
         .padding(16)
-        .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius, style: .continuous))
+        .background(
+            AppTheme.referenceCard,
+            in: RoundedRectangle(cornerRadius: 20, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(AppTheme.subtleLine, lineWidth: 1)
+        )
     }
 
     private var appVersion: String {

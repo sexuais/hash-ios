@@ -8,27 +8,34 @@ struct LicenseActivationView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                AppTheme.pageBackground
-                    .ignoresSafeArea()
+                LinearGradient(
+                    colors: [AppTheme.pageBackground, Color(red: 0.08, green: 0.10, blue: 0.16)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
 
                 ScrollViewReader { proxy in
                     ScrollView(showsIndicators: false) {
                         VStack(spacing: 0) {
                             Spacer(minLength: 42)
 
-                            Text("hashios")
-                                .font(.system(size: 30, weight: .bold, design: .rounded))
-                                .foregroundStyle(.white)
-
-                            Text("Version: 1.1.0")
-                                .font(.system(size: 13, weight: .semibold, design: .rounded))
-                                .foregroundStyle(.white.opacity(0.55))
-                                .padding(.top, 5)
+                            HStack(alignment: .center, spacing: 14) {
+                                AppLogo(size: 54)
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("hashios")
+                                        .font(.system(size: 30, weight: .bold, design: .rounded))
+                                        .foregroundStyle(.white)
+                                    Text("Version: 1.1.0")
+                                        .font(.system(size: 13, weight: .semibold, design: .rounded))
+                                        .foregroundStyle(.white.opacity(0.55))
+                                }
+                            }
 
                             Text("Package: hashios")
                                 .font(.caption.weight(.medium))
                                 .foregroundStyle(AppTheme.secondaryAccent.opacity(0.9))
-                                .padding(.top, 8)
+                                .padding(.top, 10)
 
                             VStack(spacing: 16) {
                                 HStack(spacing: 10) {
@@ -56,8 +63,8 @@ struct LicenseActivationView: View {
                                     .foregroundStyle(.white)
                                     .padding(.horizontal, 16)
                                     .frame(height: 54)
-                                    .background(AppTheme.pageBackground, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
-                                    .overlay(RoundedRectangle(cornerRadius: 10, style: .continuous).stroke(Color.white.opacity(0.12), lineWidth: 1))
+                                    .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                                    .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).stroke(AppTheme.subtleLine, lineWidth: 1))
                                     .id("license-field")
 
                                 Toggle("Remember key on this device", isOn: $manager.rememberKey)
@@ -72,8 +79,8 @@ struct LicenseActivationView: View {
                                     }
                                     .font(.subheadline.weight(.semibold))
                                     .foregroundStyle(.white)
-                                    .frame(maxWidth: .infinity, minHeight: 50)
-                                    .background(AppTheme.accent, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                    .frame(maxWidth: .infinity, minHeight: 52)
+                                    .background(LinearGradient(colors: [AppTheme.accent, AppTheme.secondaryAccent], startPoint: .leading, endPoint: .trailing), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
                                 }
                                 .buttonStyle(.plain)
                                 .disabled(key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || manager.isBusy)
@@ -102,7 +109,8 @@ struct LicenseActivationView: View {
                                 }
                             }
                             .padding(20)
-                            .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                            .background(AppTheme.referenceCard, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+                            .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).stroke(AppTheme.subtleLine, lineWidth: 1))
                             .padding(.horizontal, 22)
                             .padding(.top, 26)
                             .id("activation-card")

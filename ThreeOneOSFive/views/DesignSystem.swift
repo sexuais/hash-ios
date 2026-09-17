@@ -1,12 +1,14 @@
 import SwiftUI
 
 enum AppTheme {
-    static let accent = Color(red: 0.482, green: 0.408, blue: 0.933)
-    static let secondaryAccent = Color(red: 0.82, green: 0.81, blue: 0.93)
-    static let pageBackground = Color(red: 0.055, green: 0.063, blue: 0.10)
-    static let consoleBackground = Color(red: 0.035, green: 0.039, blue: 0.063)
-    static let referenceCard = Color(red: 0.105, green: 0.114, blue: 0.17).opacity(0.88)
-    static let pageInset: CGFloat = 16
+    static let accent = Color(red: 0.49, green: 0.69, blue: 0.98)
+    static let secondaryAccent = Color(red: 0.74, green: 0.80, blue: 0.97)
+    static let pageBackground = Color(red: 0.04, green: 0.05, blue: 0.08)
+    static let consoleBackground = Color(red: 0.02, green: 0.03, blue: 0.05)
+    static let referenceCard = Color(red: 0.10, green: 0.12, blue: 0.18)
+    static let panelCard = Color(red: 0.12, green: 0.14, blue: 0.21)
+    static let subtleLine = Color.white.opacity(0.08)
+    static let pageInset: CGFloat = 18
     static let rowIconSize: CGFloat = 17
     static let rowIconFrame: CGFloat = 28
     static let fileRowIconSize: CGFloat = 17
@@ -16,7 +18,7 @@ enum AppTheme {
     static let emptyIconSize: CGFloat = 30
     static let selectionIconSize: CGFloat = 18
 
-    static let cardCornerRadius: CGFloat = 12
+    static let cardCornerRadius: CGFloat = 18
     static let sectionSpacing: CGFloat = 18
 
     static func surface<S: ShapeStyle>(_ style: S = AppTheme.referenceCard) -> some View {
@@ -33,8 +35,12 @@ struct AppRowIcon: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 7, style: .continuous)
+            RoundedRectangle(cornerRadius: 9, style: .continuous)
                 .fill(tint.opacity(0.12))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 9, style: .continuous)
+                        .stroke(tint.opacity(0.15), lineWidth: 1)
+                )
             Image(systemName: systemName)
                 .font(.system(size: symbolSize, weight: .medium))
                 .foregroundStyle(tint)
@@ -50,14 +56,14 @@ struct AppSearchField: View {
     let clearLabel: String
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 10) {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 14, weight: .medium))
                 .foregroundStyle(.secondary)
                 .accessibilityHidden(true)
 
             TextField(prompt, text: $text)
-                .font(.body)
+                .font(.body.weight(.medium))
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .submitLabel(.search)
@@ -68,21 +74,24 @@ struct AppSearchField: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .font(.system(size: 14, weight: .medium))
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(.secondary)
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(clearLabel)
             }
         }
-        .padding(.horizontal, 11)
-        .frame(minHeight: 36)
+        .padding(.horizontal, 12)
+        .frame(minHeight: 42)
         .background(
             AppTheme.referenceCard,
-            in: RoundedRectangle(cornerRadius: 10, style: .continuous)
+            in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .stroke(AppTheme.subtleLine, lineWidth: 1)
         )
         .padding(.horizontal, AppTheme.pageInset)
         .padding(.vertical, 8)
-        .background(.bar)
     }
 }
 
@@ -98,11 +107,13 @@ struct AppLogo: View {
                     .resizable()
                     .scaledToFill()
             } else {
-                Image(systemName: "slider.horizontal.3")
-                    .font(.title2.weight(.semibold))
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(AppTheme.accent)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .fill(LinearGradient(colors: [AppTheme.accent, AppTheme.secondaryAccent], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    Image(systemName: "slider.horizontal.3")
+                        .font(.title2.weight(.semibold))
+                        .foregroundStyle(.white)
+                }
             }
         }
         .frame(width: size, height: size)
